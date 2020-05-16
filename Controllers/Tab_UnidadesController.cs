@@ -24,7 +24,7 @@ namespace Restaurant.Controllers
         [HttpGet("{id:int}")]
         public IActionResult GetTab_UnidadById(int id){
         
-        var Tab_Unidad= this._context.Tab_Unidades.SingleOrDefault(ct=> ct.Id_Tab_Unidad ==id);
+        var Tab_Unidad= this._context.Tab_Unidad.SingleOrDefault(ct=> ct.Id_Tab_Unidad ==id);
             if(Tab_Unidad != null){
                 return Ok(Tab_Unidad);
             }else{
@@ -33,10 +33,10 @@ namespace Restaurant.Controllers
 
         }
 
-        //Search by Name 
+        //Buscar por Nombre
         [HttpGet("{name}")]
         public IActionResult GetTab_UnidadByName(string name){
-        var info = this._context.Tab_Unidades.SingleOrDefault(ct => ct.Name == name);
+        var info = this._context.Tab_Unidad.SingleOrDefault(ct => ct.Name == Nom_Unidad);
 
             if(info == null){
                 return new NoContentResult();
@@ -44,22 +44,22 @@ namespace Restaurant.Controllers
                 return Ok(info);
             }
         }
-        //AddTab_Unidades
+        // Add Tab_Unidad
         [HttpPost]
         public IActionResult AddTab_Unidades([FromBody] Tab_Unidad Tab_Unidad){
         
         if(!this.ModelState.IsValid){
             return BadRequest();
         }
-            this._context.Tab_Unidades.Add(Tab_Unidad);
+            this._context.Tab_Unidad.Add(Tab_Unidad);
             this._context.SaveChanges();
-            return Created($"Tab_Unidades/{Tab_Unidad.Id_Tab_Unidad}", Tab_Unidad);
+            return Created($"Tab_Unidad/{Tab_Unidad.Id_Tab_Unidad}", Tab_Unidad);
         }        
-        //UpdateTab_Unidades
+        //Update Tab_Unidad
         [HttpPut("{id}")]
-        public IActionResult PutTab_Unidades(int id, [FromBody] Tab_Unidad Tab_Unidad){
+        public IActionResult PutTab_Unidad(int id, [FromBody] Tab_Unidad Tab_Unidad){
 
-        var target = _context.Tab_Unidades.FirstOrDefault(ct=> ct.Id_Tab_Unidad == id);
+        var target = _context.Tab_Unidad.FirstOrDefault(ct=> ct.Id_Tab_Unidad == id);
             if(target == null)
             {
                 return NotFound();
@@ -67,25 +67,24 @@ namespace Restaurant.Controllers
             else
             {
                 target.Id_Tab_Unidad = Tab_Unidad.Id_Tab_Unidad;
-                target.Name = Tab_Unidad.Name;
-                target.Last_Name = Tab_Unidad.Last_Name;
-                target.Email = Tab_Unidad.Email;
-
-                _context.Tab_Unidades.Update(target);
+                target.Des = Tab_Unidad.Des_Unidad;
+                target.Abrev = Tab_Unidad.Abrev_Unidad;
+                
+                _context.Tab_Unidad.Update(target);
                 _context.SaveChanges();
                 return new NoContentResult();
             }
 
         }
-        //Delete Tab_Unidades
+        //Delete Tab_Unidad
         [HttpDelete("{id}")]
-        public IActionResult DeleteTab_Unidades(int id){
-            var target = _context.Tab_Unidades.FirstOrDefault(ct=> ct.Id_Tab_Unidad == id);
+        public IActionResult DeleteTab_Unidad(int id){
+            var target = _context.Tab_Unidad.FirstOrDefault(ct=> ct.Id_Tab_Unidad == id);
             if(!this.ModelState.IsValid){
                 return BadRequest();
             }
             else{
-                _context.Tab_Unidades.Remove(target);
+                _context.Tab_Unidad.Remove(target);
                 _context.SaveChanges();
                 return Ok();
             }
